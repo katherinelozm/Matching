@@ -3,18 +3,19 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
 
-void mixColumns(char**, char**, char**, char**, int, int);
-
 int main(){
+	srand(time(0));
 	char** columnA;
 	char** columnB;
-	char** mixedColumnA;
-	char** mixedColumnB;
+	vector<char*> mixedColumnA;
+	vector<char*> mixedColumnB;
 	char* word;
-	int colA, colB, ans, ans2, ansA, ansB;
+	int colA, colB, ans, ans2, ansA, ansB, ansA2, ansB2;
+	double correct = 0.0, count = 0.0;
 	char answ;
 	vector<int> answersA;
 	vector<int> answersB;
@@ -67,9 +68,19 @@ int main(){
 		cout << "2. Salir" << endl;
 		cin >> ans2;
 		if (ans2==1){
-			mixedColumnA = new char*[colA];
-			mixedColumnB = new char*[colB];
-			mixColumns(columnA, columnB, mixedColumnA, mixedColumnB, colA, colB);
+			correct = 0, count = 0;
+			for (int i = 0; i < colA; i++){
+				mixedColumnA.push_back(columnA[i]);
+			}
+			for (int i = 0; i < colB; i++){
+				mixedColumnB.push_back(columnB[i]);
+			}
+			for (int i = 0; i < colA; i++){
+				random_shuffle(mixedColumnA.begin(), mixedColumnA.end());
+			}
+			for (int i = 0; i < colB; i++){
+				random_shuffle(mixedColumnB.begin(), mixedColumnB.end());
+			}
 			cout << "Columna A: " << endl;
 			for (int i = 0; i < colA; i++){
 				cout << i+1 << ". "  << mixedColumnA[i] << endl;
@@ -82,13 +93,31 @@ int main(){
 			while(answ == 's' || answ == 'S'){
 				cout << "Columna A: ";
 				cin >> ansA;
-				answersA.push_back(ansA--);
 				cout << "Columna B: ";
 				cin >> ansB;
-				answersB.push_back(ansB--);
+				for (int i = 0; i < colA; i++){
+					if (strcmp(mixedColumnA[ansA-1], columnA[i]) == 0){
+						ansA2 = i+1;
+					}
+				}
+				for (int i = 0; i < colB; i++){
+					if (strcmp(mixedColumnB[ansB-1], columnB[i]) == 0){
+						ansB2 = i+1;
+					}
+				}
+				for (int i = 0; i < answersA.size(); i++){
+					cout << answersA[i] << " " << ansA2 << endl << answersB[i] << " " << ansB2 << endl;
+					if (answersA[i] == ansA2 && answersB[i] == ansB2){
+						correct++;
+					}
+				}
+				count++;
 				cout << "¿Desea continuar? S/N " << endl;
 				cin >> answ;
 			}
+			double percentage = correct/count;
+			percentage*=100;
+			cout << endl << setprecision(0) << fixed << "Su nota es: " << percentage << "\%" << endl << endl;
 		} else {
 			exit(0);
 		}
@@ -104,17 +133,5 @@ int main(){
 		delete[] columnB[i];
 	}
 	delete[] columnB;
-	for (int i = 0; i < colA; i++){
-		delete[] mixedColumnA[i];
-	}
-	delete[] mixedColumnA;
-	for (int i = 0; i < colB; i++){
-		delete[] mixedColumnB[i];
-	}
-	delete[] mixedColumnB;
 	return 0;
-}
-
-void mixColumns(char** A, char** B, char** mixedA, char** mixedB, int size_a, int size_b){
-	
 }
