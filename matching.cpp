@@ -26,7 +26,7 @@ int main(){
 		cin >> colB;
 		word =  new char[50];
 		columnA = new char*[colA];
-		cout << "Columna A: " << endl;
+		cout << "Palabras Columna A: " << endl;
 		for (int i = 0; i < colA; i++){
 			cout << "Palabra " << i+1 << ": ";
 			cin >> word;
@@ -36,7 +36,7 @@ int main(){
 		}
 		word =  new char[50];
 		columnB = new char*[colB];
-		cout << "Columna B: " << endl;
+		cout << "Palabras Columna B: " << endl;
 		for (int i = 0; i < colB; i++){
 			cout << "Palabra " << i+1 << ": ";
 			cin >> word;
@@ -44,17 +44,17 @@ int main(){
 			strcpy(columnB[i], word);
 			word = new char[50];
 		}
-		cout << "Columna A: " << endl;
-		for (int i = 0; i < colA; i++){
-			cout << i+1  << ". " << columnA[i] << endl;
-		}
-		cout << "Columna B: " << endl;
-		for (int i = 0; i < colB; i++){
-			cout << i+1  << ". " << columnB[i] << endl;
-		}
 		cout << "Ingrese las respuestas correctas" << endl;
 		answ = 's';
 		while(answ == 's' || answ == 'S'){
+			cout << "Columna A: " << endl;
+			for (int i = 0; i < colA; i++){
+				cout << i+1  << ". " << columnA[i] << endl;
+			}
+			cout << "Columna B: " << endl;
+			for (int i = 0; i < colB; i++){
+				cout << i+1  << ". " << columnB[i] << endl;
+			}
 			cout << "Columna A: ";
 			cin >> ansA;
 			answersA.push_back(ansA--);
@@ -81,16 +81,17 @@ int main(){
 			for (int i = 0; i < colB; i++){
 				random_shuffle(mixedColumnB.begin(), mixedColumnB.end());
 			}
-			cout << "Columna A: " << endl;
-			for (int i = 0; i < colA; i++){
-				cout << i+1 << ". "  << mixedColumnA[i] << endl;
-			}
-			cout << "Columna B: " << endl;
-			for (int i = 0; i < colB; i++){
-				cout << i+1 << ". "  << mixedColumnB[i] << endl;
-			}
+			
 			answ = 's';
 			while(answ == 's' || answ == 'S'){
+				cout << "Columna A: " << endl;
+				for (int i = 0; i < colA; i++){
+					cout << i+1 << ". "  << mixedColumnA[i] << endl;
+				}
+				cout << "Columna B: " << endl;
+				for (int i = 0; i < colB; i++){
+					cout << i+1 << ". "  << mixedColumnB[i] << endl;
+				}
 				cout << "Columna A: ";
 				cin >> ansA;
 				cout << "Columna B: ";
@@ -106,7 +107,6 @@ int main(){
 					}
 				}
 				for (int i = 0; i < answersA.size(); i++){
-					cout << answersA[i] << " " << ansA2 << endl << answersB[i] << " " << ansB2 << endl;
 					if (answersA[i] == ansA2 && answersB[i] == ansB2){
 						correct++;
 					}
